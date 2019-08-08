@@ -1,6 +1,6 @@
 script_name("AutoCarTheft")
 script_authors("Foxy1e3t")
-script_version("09.08.2019")
+script_version("10.08.2019")
 script_version_number(1)
 
 local sampev = require 'lib.samp.events'
