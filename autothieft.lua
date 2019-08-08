@@ -1,6 +1,6 @@
 script_name("AutoCarTheft")
 script_authors("Foxy1e3t")
-script_version("10.08.2019")
+script_version("09.08.2019")
 script_version_number(1)
 
 local sampev = require 'lib.samp.events'
@@ -10,8 +10,8 @@ function main()
     while not isSampAvailable() do wait(100) end
     autoupdate("http://foxy1e3t.000webhostapp.com/autoupdate.json", '['..string.upper(thisScript().name)..']: ', "https://gitlab.com/Foxy1e3t/act/blob/a9f399788938459401cd4228f33393a1e5770b9d/act")
     sampAddChatMessage("{454545}[ACT]{FFFFFF}by {999999}Foxy1e3t", -1)
-    sampAddChatMessage("{454545}[ACT]{FFFFFF}ГЉГ®Г¬Г Г­Г¤Г  ГўГ§Г«Г®Г¬Г :{999999}/act", -1)
-    sampAddChatMessage("{454545}[ACT]{FFFFFF}ГЉГ®Г¬Г Г­Г¤Г  ГўГЄГ«ГѕГ·ГҐГ­ГЁГҐ Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї id ГІГҐГЄГ±ГІГ¤Г°Г ГўГ®Гў:{999999}/actt", -1)
+    sampAddChatMessage("{454545}[ACT]{FFFFFF}Команда взлома:{999999}/act", -1)
+    sampAddChatMessage("{454545}[ACT]{FFFFFF}Команда включение отображения id текстдравов:{999999}/actt", -1)
     sampRegisterChatCommand('act',theft)
     sampRegisterChatCommand('actt', function() funk = not funk end)
     wait(-1)
@@ -19,8 +19,8 @@ end
 
 function theft(text)
     if text == ''then
-        sampAddChatMessage('Г‚ГўГҐГ¤ГЁГІГҐ Г¬Г®Г¤ГҐГ«Гј ГЄГ®Г­ГЄГ°ГҐГІГ­Г®Г© Г¬Г ГёГЁГ­Г» ГЁ Id ГІГҐГЄГ±ГІГ¤Г°Г ГўГ  "clear point".',-1)
-        sampAddChatMessage('ГЏГ°ГЁГ¬ГҐГ°: /act sultan 2130',-1)
+        sampAddChatMessage('Введите модель конкретной машины и Id текстдрава "clear point".',-1)
+        sampAddChatMessage('Пример: /act sultan 2130',-1)
     end 
     if text == "sultan 2130" then
         lua_thread.create(function()
@@ -125,21 +125,21 @@ function autoupdate(json_url, prefix, url)
                 lua_thread.create(function(prefix)
                   local dlstatus = require('moonloader').download_status
                   local color = -1
-                  sampAddChatMessage((prefix..'ГЋГЎГ­Г Г°ГіГ¦ГҐГ­Г® Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ. ГЏГ»ГІГ ГѕГ±Гј Г®ГЎГ­Г®ГўГЁГІГјГ±Гї c '..thisScript().version..' Г­Г  '..updateversion), color)
+                  sampAddChatMessage((prefix..'Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion), color)
                   wait(250)
                   downloadUrlToFile(updatelink, thisScript().path,
                     function(id3, status1, p13, p23)
                       if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
-                        print(string.format('Г‡Г ГЈГ°ГіГ¦ГҐГ­Г® %d ГЁГ§ %d.', p13, p23))
+                        print(string.format('Загружено %d из %d.', p13, p23))
                       elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
-                        print('Г‡Г ГЈГ°ГіГ§ГЄГ  Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГї Г§Г ГўГҐГ°ГёГҐГ­Г .')
-                        sampAddChatMessage((prefix..'ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ Г§Г ГўГҐГ°ГёГҐГ­Г®!'), color)
+                        print('Загрузка обновления завершена.')
+                        sampAddChatMessage((prefix..'Обновление завершено!'), color)
                         goupdatestatus = true
                         lua_thread.create(function() wait(500) thisScript():reload() end)
                       end
                       if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
                         if goupdatestatus == nil then
-                          sampAddChatMessage((prefix..'ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ ГЇГ°Г®ГёГ«Г® Г­ГҐГіГ¤Г Г·Г­Г®. Г‡Г ГЇГіГ±ГЄГ Гѕ ГіГ±ГІГ Г°ГҐГўГёГіГѕ ГўГҐГ°Г±ГЁГѕ..'), color)
+                          sampAddChatMessage((prefix..'Обновление прошло неудачно. Запускаю устаревшую версию..'), color)
                           update = false
                         end
                       end
@@ -149,11 +149,11 @@ function autoupdate(json_url, prefix, url)
                 )
               else
                 update = false
-                print('v'..thisScript().version..': ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ Г­ГҐ ГІГ°ГҐГЎГіГҐГІГ±Гї.')
+                print('v'..thisScript().version..': Обновление не требуется.')
               end
             end
           else
-            print('v'..thisScript().version..': ГЌГҐ Г¬Г®ГЈГі ГЇГ°Г®ГўГҐГ°ГЁГІГј Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ. Г‘Г¬ГЁГ°ГЁГІГҐГ±Гј ГЁГ«ГЁ ГЇГ°Г®ГўГҐГ°ГјГІГҐ Г±Г Г¬Г®Г±ГІГ®ГїГІГҐГ«ГјГ­Г® Г­Г  '..url)
+            print('v'..thisScript().version..': Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url)
             update = false
           end
         end
